@@ -57,9 +57,9 @@ function createPreview(title, emptyText, stickersAsText) {
   titleView.innerHTML = stickersAsText.length === 0 ? '<span>Select some stickers</span>' : '<span>Stickers to send</span>'
   statView.appendChild(titleView)
 
-  const itemView = document.createElement('div')
+  const itemView = document.createElement('textarea')
   itemView.className = 'preview-list__item'
-  itemView.innerHTML = `<textarea class="preview-list__item-value">${stickersAsText}</textarea>`
+  itemView.innerHTML = stickersAsText
   statView.appendChild(itemView)
   return statView
 }
