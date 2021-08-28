@@ -9,7 +9,7 @@ miro.onReady(() => {
         title: 'notes to slack',
         svgIcon: icon24,
         onClick: () => {
-          miro.board.ui.openLeftSidebar('sidebar.html')
+          miro.board.ui.openLeftSidebar('miro-notes2slack/sidebar.html')
         },
       },
     },
