@@ -27,13 +27,11 @@ async function getStickers() {
 function convertToText(stickers) {
   let text = ''
   stickers.forEach(sticker => {
-    console.log(sticker.text)
     let plainText = sticker.text.replaceAll('<p>', '')
-    console.log(plainText)
     plainText = plainText.replaceAll(/<\/p>|<br>|<br \/>/gm, '\n')
-    console.log(plainText)
+    plainText = plainText.trim()
     text += plainText
-    text += '\n-------\n'
+    text += '\n\n-------\n\n'
   })
   return text
 }
@@ -61,24 +59,20 @@ function createPreview(title, emptyText, stickersAsText) {
 
   const itemView = document.createElement('textarea')
   itemView.className = 'preview-list__item'
+  itemView.id = 'stickers_text'
   console.log(stickersAsText)
   itemView.value = stickersAsText
   statView.appendChild(itemView)
   return statView
 }
 
-function calcByType(widgets) {
-  return countBy(widgets, (a) => a.type)
-}
-
-function countBy(list, keyGetter) {
-  const map = new Map()
-  list.forEach((item) => {
-    const key = keyGetter(item)
-    const count = map.get(key)
-    map.set(key, !count ? 1 : count + 1)
-  })
-  return new Map([...map.entries()].sort((a, b) => b[1] - a[1]))
+function sendToSlack() {
+  const slackWebhook = document.getElementById('slack_webhook').value
+  const textToSend = document.getElementById('stickers_text').value
+  const slackJson = {text: textToSend}
+  fetch(slackWebhook, {
+    body: JSON.stringify(slackJson)
+  }).then()
 }
 
 miro.onReady(() => {
