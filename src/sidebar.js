@@ -5,9 +5,34 @@
 // disable button if none selected or webhook url is empty
 
 async function showPreview() {
-  const selection = await miro.board.selection.get()
   clear()
-  getContainer().appendChild(createPreview('by Type', 'Looks like the selection is empty.', selection))
+  getContainer().appendChild(createPreview('by Type', 'Looks like the selection is empty.', getStickers()))
+}
+
+/**
+ *
+ * @returns {Promise<SDK.IStickerWidget[]>}
+ */
+async function getStickers() {
+  const selection = await miro.board.selection.get()
+  return selection.filter(item => item.type.toLowerCase() === 'sticker')
+}
+
+/**
+ *
+ * @param {Array<SDK.IStickerWidget>} stickers
+ * @returns {Promise<void>}
+ */
+async function convertToText(stickers) {
+  let text = ''
+  stickers.forEach(sticker => {
+    let plainText = sticker.text.replaceAll('/<p>/gm', '')
+    plainText = plainText.replaceAll('/<\/p><\/br>/gm', '\n')
+    plainText = plainText.trim()
+    text += plainText
+    text += '-------\n'
+  })
+  return text
 }
 
 function clear() {
@@ -21,8 +46,7 @@ function getContainer() {
   return document.getElementById('notes-container')
 }
 
-function createPreview(title, emptyText, data) {
-  const stickers = data.filter(item => item.type.toLowerCase() === 'sticker')
+function createPreview(title, emptyText, stickers) {
 
   const statView = document.createElement('div')
   statView.className = 'preview-list__table'
@@ -32,12 +56,11 @@ function createPreview(title, emptyText, data) {
   titleView.innerHTML = stickers.length === 0 ? '<span>Stickers to send</span>' : '<span>Select some stickers</span>'
   statView.appendChild(titleView)
 
-  stickers.forEach(sticker => {
-    let itemView = document.createElement('div')
-    itemView.className = 'preview-list__item'
-    itemView.innerHTML = `<span class="preview-list__item-value">${sticker.text}</span>`
-    statView.appendChild(itemView)
-  })
+  const itemView = document.createElement('div')
+  itemView.className = 'preview-list__item'
+  const asText = convertToText(stickers)
+  itemView.innerHTML = `<span class="preview-list__item-value">${asText}</span>`
+  statView.appendChild(itemView)
   return statView
 }
 
