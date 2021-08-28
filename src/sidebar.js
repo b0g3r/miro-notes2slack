@@ -33,7 +33,7 @@ function convertToText(stickers) {
     plainText = plainText.replaceAll(/<\/p>|<br>|<br \/>/gm, '\n')
     console.log(plainText)
     text += plainText
-    text += '-------\n'
+    text += '\n-------\n'
   })
   return text
 }
