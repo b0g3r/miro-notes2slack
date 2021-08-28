@@ -6,7 +6,8 @@
 
 async function showPreview() {
   clear()
-  getContainer().appendChild(createPreview('by Type', 'Looks like the selection is empty.', getStickers()))
+  const stickers = await getStickers()
+  getContainer().appendChild(createPreview('by Type', 'Looks like the selection is empty.', stickers))
 }
 
 /**
