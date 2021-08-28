@@ -71,6 +71,7 @@ function sendToSlack() {
   const textToSend = document.getElementById('stickers_text').value
   const slackJson = {text: textToSend}
   fetch(slackWebhook, {
+    method: 'POST',
     body: JSON.stringify(slackJson)
   }).then()
 }
