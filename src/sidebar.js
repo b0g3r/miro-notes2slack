@@ -6,6 +6,7 @@
 
 async function showPreview() {
   const selection = await miro.board.selection.get()
+  console.log('selection')
   clear()
   const statByType = calcByType(selection)
   getContainer().appendChild(createStatTable('by Type', 'Looks like the selection is empty.', statByType))
