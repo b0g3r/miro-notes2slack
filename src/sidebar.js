@@ -6,8 +6,8 @@
 
 async function showPreview() {
   clear()
-  const stickers = await getStickers()
-  getContainer().appendChild(createPreview('by Type', 'Looks like the selection is empty.', stickers))
+  const stickersAsText = convertToText(await getStickers())
+  getContainer().appendChild(createPreview('by Type', 'Looks like the selection is empty.', stickersAsText))
 }
 
 /**
@@ -24,7 +24,7 @@ async function getStickers() {
  * @param {Array<SDK.IStickerWidget>} stickers
  * @returns {Promise<void>}
  */
-async function convertToText(stickers) {
+function convertToText(stickers) {
   let text = ''
   stickers.forEach(sticker => {
     let plainText = sticker.text.replaceAll('/<p>/gm', '')
@@ -47,7 +47,7 @@ function getContainer() {
   return document.getElementById('notes-container')
 }
 
-function createPreview(title, emptyText, stickers) {
+function createPreview(title, emptyText, stickersAsText) {
 
   const statView = document.createElement('div')
   statView.className = 'preview-list__table'
@@ -59,8 +59,7 @@ function createPreview(title, emptyText, stickers) {
 
   const itemView = document.createElement('div')
   itemView.className = 'preview-list__item'
-  const asText = convertToText(stickers)
-  itemView.innerHTML = `<span class="preview-list__item-value">${asText}</span>`
+  itemView.innerHTML = `<span class="preview-list__item-value">${stickersAsText}</span>`
   statView.appendChild(itemView)
   return statView
 }
