@@ -59,7 +59,7 @@ function createPreview(title, emptyText, stickersAsText) {
 
   const itemView = document.createElement('textarea')
   itemView.className = 'preview-list__item'
-  itemView.innerHTML = stickersAsText
+  itemView.innerText = stickersAsText
   statView.appendChild(itemView)
   return statView
 }
