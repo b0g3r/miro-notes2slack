@@ -22,7 +22,7 @@ async function getStickers() {
 /**
  *
  * @param {Array<SDK.IStickerWidget>} stickers
- * @returns {Promise<void>}
+ * @returns {Promise<string>}
  */
 function convertToText(stickers) {
   let text = ''
@@ -59,7 +59,7 @@ function createPreview(title, emptyText, stickersAsText) {
 
   const itemView = document.createElement('div')
   itemView.className = 'preview-list__item'
-  itemView.innerHTML = `<span class="preview-list__item-value">${stickersAsText}</span>`
+  itemView.innerHTML = `<textarea class="preview-list__item-value">${stickersAsText}</textarea>`
   statView.appendChild(itemView)
   return statView
 }
