@@ -31,7 +31,7 @@ function convertToText(stickers) {
     plainText = plainText.replaceAll(/<\/p>|<br>|<br \/>/gm, '\n')
     plainText = plainText.trim()
     text += plainText
-    text += '\n\n-------\n\n'
+    text += '\n\n--------------\n\n'
   })
   return text
 }
@@ -69,7 +69,7 @@ function createPreview(title, emptyText, stickersAsText) {
 function sendToSlack() {
   const slackWebhook = document.getElementById('slack_webhook').value
   const textToSend = document.getElementById('stickers_text').value
-  const slackJson = {text: textToSend}
+  const slackJson = {text: textToSend, link_names: true}
   fetch(slackWebhook, {
     method: 'POST',
     body: JSON.stringify(slackJson)
