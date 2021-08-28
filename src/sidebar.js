@@ -28,7 +28,7 @@ function convertToText(stickers) {
   let text = ''
   stickers.forEach(sticker => {
     let plainText = sticker.text.replaceAll('/<p>/gm', '')
-    plainText = plainText.replaceAll('/<\/p><\/br>/gm', '\n')
+    plainText = plainText.replaceAll('/<\/p>|<\/br>/gm', '\n')
     plainText = plainText.trim()
     text += plainText
     text += '-------\n'
