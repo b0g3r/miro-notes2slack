@@ -22,7 +22,6 @@ function getContainer() {
 }
 
 function createPreview(title, emptyText, data) {
-  // filter only stickers
   const stickers = data.filter(item => item.type.toLowerCase() === 'sticker')
 
   const statView = document.createElement('div')
@@ -30,13 +29,13 @@ function createPreview(title, emptyText, data) {
 
   const titleView = document.createElement('div')
   titleView.className = 'preview-list__title'
-  titleView.innerHTML = stickers.size === 0 ? '<span>Stickers to send</span>' : '<span>Select some stickers</span>'
+  titleView.innerHTML = stickers.length === 0 ? '<span>Stickers to send</span>' : '<span>Select some stickers</span>'
   statView.appendChild(titleView)
 
   stickers.forEach(sticker => {
     let itemView = document.createElement('div')
     itemView.className = 'preview-list__item'
-    itemView.innerHTML = `<span class="preview-list__item-value">${sticker}</span>`
+    itemView.innerHTML = `<span class="preview-list__item-value">${sticker.text}</span>`
     statView.appendChild(itemView)
   })
   return statView
